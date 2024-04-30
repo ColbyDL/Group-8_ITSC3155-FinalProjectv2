@@ -9,10 +9,9 @@ router = APIRouter(tags=["Users"], prefix="/users")
 
 @router.get("/{foodCategory}", response_model=list[schema.Menu])
 def read_all_categories(foodCategory: str, db: Session = Depends(get_db)):
-    if foodCategory:
-        return controller.read_all_categories(db=db, foodCategory=foodCategory)
-    return controller.read_all_categories(db=db)
+    return controller.read_all_categories(db, foodCategory=foodCategory)
 
+    
 
 @router.get("/orderStatus/{trackingNumber}")
 def read_order_status(trackingNumber: int, db: Session = Depends(get_db)):
@@ -23,3 +22,4 @@ def read_order_status(trackingNumber: int, db: Session = Depends(get_db)):
         "tracking_number": trackingNumber,
         "order_status": order.orderStatus
     }
+
