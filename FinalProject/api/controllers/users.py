@@ -47,3 +47,4 @@ def get_order_status_by_tracking_number(db: Session, trackingNumber: int):
         db.query(Orders).filter(and_(Orders.trackingNumber == trackingNumber)).first()
     )
     return order
+
