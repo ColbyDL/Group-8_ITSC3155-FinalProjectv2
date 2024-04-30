@@ -1,24 +1,18 @@
-from fastapi import HTTPException
-from sqlalchemy import func, and_, DECIMAL
 from sqlalchemy.exc import NoResultFound
+from sqlalchemy import func, and_, DECIMAL, Integer
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response, Depends
-
-
-
 
 # from fastapi import HTTPException, status, Response, Depends
 # from ..models import orders as model
 # from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime, date
-
-
-
 from ..models.orders import Orders
 from ..models.dishesordered import DishesOrdered
 from ..models.recipes import Recipes
 from ..models.ingredients import Ingredients
+from ..models.reviews import Reviews
 
 
 def get_daily_revenue(db: Session, query_date: datetime) -> float:
@@ -62,3 +56,11 @@ def get_orders_by_insufficient_ingredients(db: Session, order_id: int):
         return shortage
     except NoResultFound:
         return "No order found with that ID."
+
+
+def get_reviews_by_score(db: Session, score: int):
+    return db.query(Reviews).filter(
+        and_(
+            Reviews.reviewScore == score
+        )
+    ).all()
