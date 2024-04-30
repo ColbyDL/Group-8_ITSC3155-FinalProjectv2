@@ -8,9 +8,9 @@ class Customers(Base):
     __tablename__ = "customers"
 
     customerId = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    name = Column(String(100), unique=True, nullable=True)
-    email = Column(String(100), unique=True, nullable=True)
-    phoneNumber = Column(String(100), unique=True, nullable=True)
-    address = Column(String(100), unique=True, nullable=True)
-    cardInfo = Column(String(100), unique=True, nullable=True)
-    cardType = Column(String(100), unique=True, nullable=True)
+    name = Column(String(100), unique=False, nullable=True)
+    email = Column(String(100), unique=False, nullable=True)
+    phoneNumber = Column(String(100), unique=False, nullable=True)
+    address = Column(String(100), unique=False, nullable=True)
+    cardInfo = Column(String(100), unique=False, nullable=True)
+    cardType = Column(String(100), unique=False, nullable=True)
