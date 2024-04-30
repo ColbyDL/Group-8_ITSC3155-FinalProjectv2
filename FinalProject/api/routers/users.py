@@ -25,3 +25,13 @@ def read_order_status(trackingNumber: int, db: Session = Depends(get_db)):
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
     return {"tracking_number": trackingNumber, "order_status": order.orderStatus}
+
+
+@router.get("/{finished}/{trackingNumber}")
+def finished_ordering(
+    finished: bool,
+    trackingNumber: int,
+    promotionCode: int,
+    db: Session = Depends(get_db),
+):
+    return controller.finished_ordering(db, finished, trackingNumber, promotionCode)
