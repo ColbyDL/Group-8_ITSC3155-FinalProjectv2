@@ -22,3 +22,9 @@ def read_orders_by_date_range(start_date: date, end_date: date, db: Session = De
     if not orders:
         raise HTTPException(status_code=404, detail="No order found for this date range")
     return orders
+
+@router.get("/insufficient/{order_id}")
+def alert_for_insufficient_ingredients(order_id, db: Session = Depends(get_db)):
+    shortages = controller.get_orders_by_insufficient_ingredients(db, order_id)
+    return shortages
+    
