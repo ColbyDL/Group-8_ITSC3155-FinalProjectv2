@@ -7,6 +7,7 @@ from . import (
     promotions,
     recipes,
     reviews,
+    owners,
 )
 
 
@@ -19,3 +20,4 @@ def load_routes(app):
     app.include_router(promotions.router)
     app.include_router(recipes.router)
     app.include_router(reviews.router)
+    app.include_router(owners.router)
