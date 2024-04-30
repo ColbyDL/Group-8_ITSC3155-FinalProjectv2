@@ -11,7 +11,6 @@ router = APIRouter(tags=["Users"], prefix="/users")
 def read_all_categories(foodCategory: str, db: Session = Depends(get_db)):
     return controller.read_all_categories(db, foodCategory=foodCategory)
 
-    
 
 @router.get("/orderStatus/{trackingNumber}")
 def read_order_status(trackingNumber: int, db: Session = Depends(get_db)):
