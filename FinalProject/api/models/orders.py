@@ -15,9 +15,9 @@ class Orders(Base):
     trackingNumber = Column(Integer, primary_key=True, index=True, autoincrement=True)
     orderDate = Column(DATETIME, nullable=False, default=datetime.now)
     customerId = Column(Integer, ForeignKey("customers.customerId"))
-    orderStatus = Column(BOOLEAN, unique=False, server_default="False")
+    orderStatus = Column(BOOLEAN, unique=False, default=False)
     promotionCode = Column(Integer, ForeignKey("promotions.promotionCode"))
-    transactionStatus = Column(BOOLEAN, unique=False, server_default="False")
+    transactionStatus = Column(BOOLEAN, unique=False, default=False)
     totalPrice = Column(DECIMAL(4, 2), nullable=False, server_default="0.0")
 
     """
