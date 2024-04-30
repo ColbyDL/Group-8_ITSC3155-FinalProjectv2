@@ -17,6 +17,8 @@ from datetime import datetime, date
 
 from ..models.orders import Orders
 from ..models.dishesordered import DishesOrdered
+from ..models.recipes import Recipes
+from ..models.ingredients import Ingredients
 
 
 def get_daily_revenue(db: Session, query_date: datetime) -> float:
@@ -50,11 +52,13 @@ def get_orders_by_insufficient_ingredients(db: Session, order_id: int):
     try:
         order = db.query(DishesOrdered).filter(DishesOrdered.orderId == order_id).one()
         shortage = []
-        for recipe in order.menu.recipes:
-            for ingredient in recipe.ingredients:
-                if recipe.amountRequired > ingredient.amountAvailable:
+        recipes = Recipes
+        ingredients = Ingredients
+        for recipes in order.menu:
+            for ingredients in recipe.ingredients:
+                if recipes.amountRequired > ingredients.amountAvailable:
                     shortage.append(
-                        f"Not enough {ingredient.ingredientName}: required {recipe.amountRequired}, available {ingredient.amountAvailable}")
+                        f"Not enough {ingredients.ingredientName}: required {recipes.amountRequired}, available {ingredients.amountAvailable}")
         return shortage
     except NoResultFound:
         return "No order found with that ID."
