@@ -1,20 +1,15 @@
 from fastapi import HTTPException
-from sqlalchemy import func, and_, DECIMAL
+from sqlalchemy import func, and_, DECIMAL, Integer
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response, Depends
-
-
-
 
 # from fastapi import HTTPException, status, Response, Depends
 # from ..models import orders as model
 # from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime, date
-
-
-
 from ..models.orders import Orders
+from ..models.reviews import Reviews
 
 
 def get_daily_revenue(db: Session, query_date: datetime) -> float:
@@ -44,3 +39,10 @@ def get_orders_by_date_range(db: Session, start_date: date, end_date: date):
         )
     ).all()
 
+
+def get_reviews_by_score(db: Session, score: int):
+    return db.query(Reviews).filter(
+        and_(
+            Reviews.reviewScore == score
+        )
+    ).all()

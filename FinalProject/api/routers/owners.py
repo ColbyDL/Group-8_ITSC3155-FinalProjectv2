@@ -22,3 +22,10 @@ def read_orders_by_date_range(start_date: date, end_date: date, db: Session = De
     if not orders:
         raise HTTPException(status_code=404, detail="No order found for this date range")
     return orders
+
+@router.get("/reviews/{score}")
+def read_reviews_by_score(score: int, db: Session = Depends(get_db)):
+    reviews = controller.get_reviews_by_score(db, score)
+    if not reviews:
+        raise HTTPException(status_code=404, detail="No reviews found with this score")
+    return reviews
