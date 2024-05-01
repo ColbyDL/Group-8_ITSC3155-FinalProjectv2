@@ -11,6 +11,7 @@ def create(db: Session, request):
         promotionCode=request.promotionCode,
         transactionStatus=request.transactionStatus,
         totalPrice=request.totalPrice,
+        takeOut=request.takeOut,
     )
 
     try:

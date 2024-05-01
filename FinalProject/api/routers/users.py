@@ -3,7 +3,6 @@ from sqlalchemy.orm import Session
 from ..controllers import users as controller
 from ..controllers import customers as customers
 from ..dependencies.database import engine, get_db
-from ..schemas import customers as users
 from ..schemas import menu as schema
 
 router = APIRouter(tags=["Users"], prefix="/users")
@@ -27,7 +26,7 @@ def read_order_status(trackingNumber: int, db: Session = Depends(get_db)):
     return {"tracking_number": trackingNumber, "order_status": order.orderStatus}
 
 
-@router.get("/{finished}/{trackingNumber}")
+@router.get("/{finished}/{trackingNumber}/{promotionCode}")
 def finished_ordering(
     finished: bool,
     trackingNumber: int,
