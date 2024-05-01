@@ -10,6 +10,7 @@ class OrdersBase(BaseModel):
     orderStatus: bool
     transactionStatus: bool
     totalPrice: float
+    takeOut: bool
 
 
 class OrdersCreate(OrdersBase):
@@ -23,6 +24,7 @@ class OrdersUpdate(BaseModel):
     customerId: Optional[int] = None
     promotionCode: Optional[int] = None
     totalPrice: Optional[float] = None
+    takeOut: Optional[bool] = None
 
 
 class Orders(OrdersBase):

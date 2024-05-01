@@ -9,5 +9,5 @@ class Ingredients(Base):
 
     ingredientId = Column(Integer, primary_key=True, index=True, autoincrement=True)
     ingredientName = Column(String(100), unique=True, nullable=False)
-    amountAvailable = Column(DECIMAL(4, 2), nullable=False, server_default="0.0")
+    amountAvailable = Column(Integer, nullable=False)
     unit = Column(String(10), nullable=False, server_default="unit")

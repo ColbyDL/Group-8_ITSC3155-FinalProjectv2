@@ -1,12 +1,8 @@
-from sqlalchemy import BOOLEAN, Column, ForeignKey, Integer, String, DECIMAL, DATETIME
+from sqlalchemy import BOOLEAN, Column, ForeignKey, Integer, DECIMAL, DATETIME
 from sqlalchemy.orm import relationship
 from datetime import datetime
 
-from api.models.dishesordered import DishesOrdered
-from api.models.menu import Menu
 from ..dependencies.database import Base
-from sqlalchemy import func, select
-from sqlalchemy.ext.hybrid import hybrid_property
 
 
 class Orders(Base):
@@ -19,6 +15,7 @@ class Orders(Base):
     promotionCode = Column(Integer, ForeignKey("promotions.promotionCode"))
     transactionStatus = Column(BOOLEAN, unique=False, default=False)
     totalPrice = Column(DECIMAL(4, 2), nullable=False, server_default="0.0")
+    takeOut = Column(BOOLEAN, unique=False, default=False)
 
     """
     @hybrid_property

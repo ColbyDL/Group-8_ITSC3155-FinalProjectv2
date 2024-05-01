@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 
 class IngredientsBase(BaseModel):
-    amountAvailable: float
+    amountAvailable: int
     ingredientName: str
     unit: str
 
@@ -14,7 +14,7 @@ class IngredientsCreate(IngredientsBase):
 
 
 class IngredientsUpdate(BaseModel):
-    amountAvailable: Optional[float] = None
+    amountAvailable: Optional[int] = None
     ingredientName: Optional[str] = None
     unit: Optional[str] = None
 

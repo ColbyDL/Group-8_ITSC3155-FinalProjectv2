@@ -13,6 +13,7 @@ from ..models.dishesordered import DishesOrdered
 from ..models.recipes import Recipes
 from ..models.ingredients import Ingredients
 from ..models.reviews import Reviews
+from ..models.menu import Menu
 
 
 def get_daily_revenue(db: Session, query_date: datetime) -> float:
@@ -35,32 +36,33 @@ def get_daily_revenue(db: Session, query_date: datetime) -> float:
 
 
 def get_orders_by_date_range(db: Session, start_date: date, end_date: date):
-    return db.query(Orders).filter(
-        and_(
-            Orders.orderDate >= start_date,
-            Orders.orderDate <= end_date
-        )
-    ).all()
+    return (
+        db.query(Orders)
+        .filter(and_(Orders.orderDate >= start_date, Orders.orderDate <= end_date))
+        .all()
+    )
+
 
 def get_orders_by_insufficient_ingredients(db: Session, order_id: int):
     try:
-        order = db.query(DishesOrdered).filter(DishesOrdered.orderId == order_id).one()
-        shortage = []
-        recipes = Recipes
-        ingredients = Ingredients
-        for recipes in order.menu:
-            for ingredients in recipe.ingredients:
-                if recipes.amountRequired > ingredients.amountAvailable:
-                    shortage.append(
-                        f"Not enough {ingredients.ingredientName}: required {recipes.amountRequired}, available {ingredients.amountAvailable}")
-        return shortage
+        amountavail = (
+            db.query(Ingredients)
+            .filter(
+                and_(
+                    DishesOrdered.orderId == order_id,
+                    DishesOrdered.menuItem == Menu.menuItem,
+                    Menu.menuItem == Recipes.menuItem,
+                    Recipes.ingredientId == Ingredients.ingredientId,
+                    Ingredients.amountAvailable < Recipes.amountRequired,
+                )
+            )
+            .all()
+        )
+
+        return amountavail
     except NoResultFound:
         return "No order found with that ID."
 
 
 def get_reviews_by_score(db: Session, score: int):
-    return db.query(Reviews).filter(
-        and_(
-            Reviews.reviewScore == score
-        )
-    ).all()
+    return db.query(Reviews).filter(and_(Reviews.reviewScore == score)).all()
