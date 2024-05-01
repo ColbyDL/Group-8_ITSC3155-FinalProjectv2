@@ -3,6 +3,6 @@ class conf:
     db_name = "OnlineOrdering"
     db_port = 3306
     db_user = "root"
-    db_password = "Drowsi@Cheese81!"
+    db_password = "##input##"
     app_host = "localhost"
     app_port = 8000
